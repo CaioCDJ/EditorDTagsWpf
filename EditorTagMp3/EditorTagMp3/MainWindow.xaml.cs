@@ -61,20 +61,23 @@ namespace EditorTagMp3
                     txtAlbum.Text = file.Tag.Album;
                 if (file.Tag.Year != 0 && file.Tag.Year > 0)
                     txtAno.Text = Convert.ToString(file.Tag.Year);
-                
-                // imagem do album
-                TagLib.IPicture pic = file.Tag.Pictures[0];
-                MemoryStream ms = new MemoryStream(pic.Data.Data);
-                ms.Seek(0, SeekOrigin.Begin);
-                BitmapImage bitmap = new BitmapImage();
-                bitmap.BeginInit();
-                bitmap.StreamSource = ms;
-                bitmap.EndInit();
-                System.Windows.Controls.Image img = new System.Windows.Controls.Image();
-                img.Source = bitmap;
-                picImge.Source = img.Source;
-                GradientGrid(ms);   
 
+                // imagem do album
+                try
+                {
+                    TagLib.IPicture pic = file.Tag.Pictures[0];
+                    MemoryStream ms = new MemoryStream(pic.Data.Data);
+                    ms.Seek(0, SeekOrigin.Begin);
+                    BitmapImage bitmap = new BitmapImage();
+                    bitmap.BeginInit();
+                    bitmap.StreamSource = ms;
+                    bitmap.EndInit();
+                    System.Windows.Controls.Image img = new System.Windows.Controls.Image();
+                    img.Source = bitmap;
+                    picImge.Source = img.Source;
+                    GradientGrid(ms);
+                }
+                catch { }
                 grdPlayer.Visibility = Visibility.Visible;
                 stpInfo.Visibility = Visibility.Visible;
             }
